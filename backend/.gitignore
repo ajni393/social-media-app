@@ -1,0 +1,24 @@
+# Gradle
+.gradle/
+build/
+*.jar
+*.war
+
+# Maven
+target/
+pom.xml.tag
+
+# IDE
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local
