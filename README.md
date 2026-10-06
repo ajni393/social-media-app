@@ -1,41 +1,80 @@
-# Knot Social
+# Knot Social Media App
 
-A polished single-page social media demo inspired by Instagram, WhatsApp, and AI productivity experiences.
+A full-stack social media application built with React, Kotlin, and Spring Boot.
 
-## Features included
+## Live Preview
 
-- Premium gold + blue dark/light theme
-- Stories carousel
-- Social feed with responsive cards
-- Chat screen with messaging UI
-- Audio and video call preview buttons
-- Reels page
-- Search page
-- Notifications page
-- Profile page with statistics
-- AI assistant modal
-- Login and signup modal with localStorage auth demo
-- Create post modal
-- Bottom navigation UX
+View the app live at:
+**https://ajni393.github.io/social-media-app/**
 
-## Run locally
+## Features
 
-Open `index.html` in your browser.
+✅ Stories carousel  
+✅ Social feed with posts  
+✅ Chat & messaging  
+✅ Audio/video calls  
+✅ Reels page  
+✅ User profiles  
+✅ AI assistant  
+✅ Login & signup  
+✅ Dark/light theme  
+✅ Mobile responsive  
 
-You can also start a simple local server:
+## Local Setup
+
+### Frontend (React)
 
 ```bash
-python3 -m http.server 8000
+cd frontend
+npm install
+npm run dev
 ```
 
-Then visit `http://localhost:8000`.
+Open: `http://localhost:5173`
 
-## Files
+### Backend (Kotlin + Spring Boot)
 
-- `index.html`
-- `styles.css`
-- `script.js`
+```bash
+cd backend
+./gradlew bootRun
+```
 
-## Notes
+API runs on: `http://localhost:8080`
 
-This is a front-end demo MVP built for visual design and interaction flow. It uses browser `localStorage` for signup/login simulation and browser permissions for camera/audio call demos.
+### Database (PostgreSQL)
+
+```bash
+docker-compose up -d
+```
+
+Database: `knot_db` (postgres/password)
+
+## Project Structure
+
+```
+├── frontend/           # React + Vite app
+├── backend/            # Kotlin + Spring Boot API
+├── index.html          # Live preview page
+├── docker-compose.yml  # PostgreSQL container
+└── README.md
+```
+
+## Tech Stack
+
+- **Frontend:** React 18, Vite, TypeScript
+- **Backend:** Kotlin, Spring Boot 3, Spring Security
+- **Database:** PostgreSQL
+- **Auth:** JWT tokens
+- **Deployment:** GitHub Pages
+
+## API Endpoints
+
+- `POST /api/auth/signup` — Create account
+- `POST /api/auth/login` — Login
+- `GET /api/posts` — Get feed
+- `POST /api/posts` — Create post
+- `GET /api/auth/me` — Get current user
+
+---
+
+**Made with ❤️ by Knot Team**

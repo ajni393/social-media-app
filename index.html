@@ -3,271 +3,562 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Knot Social</title>
-    <meta
-      name="description"
-      content="Knot Social — a premium social media demo with stories, feed, chat, calls, reels, AI assistant, and profile features."
-    />
+    <title>Knot Social - Demo</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css" />
+    <style>
+      :root {
+        --bg: #f3f6ff;
+        --surface: rgba(255, 255, 255, 0.8);
+        --surface-strong: #ffffff;
+        --text: #111827;
+        --muted: #5b6477;
+        --line: rgba(17, 24, 39, 0.08);
+        --shadow: 0 18px 40px rgba(17, 24, 39, 0.08);
+        --gradient: linear-gradient(135deg, #7c3aed, #ec4899, #06b6d4);
+      }
+
+      body.dark {
+        --bg: #050a12;
+        --surface: rgba(19, 28, 47, 0.77);
+        --surface-strong: #131c2f;
+        --text: #edf4ff;
+        --muted: #b9c7dd;
+        --line: rgba(255, 255, 255, 0.08);
+        --shadow: 0 18px 42px rgba(0, 0, 0, 0.35);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(180deg, var(--bg), #f8fafc);
+        color: var(--text);
+        transition: background 0.25s ease, color 0.25s ease;
+      }
+
+      body.dark {
+        background: linear-gradient(180deg, #050a12, #0b1020);
+      }
+
+      button, input, textarea {
+        font: inherit;
+      }
+
+      button {
+        cursor: pointer;
+      }
+
+      input, textarea {
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 12px 14px;
+        width: 100%;
+        background: var(--surface-strong);
+        color: var(--text);
+      }
+
+      textarea {
+        resize: vertical;
+        min-height: 110px;
+      }
+
+      a {
+        color: #7c3aed;
+        text-decoration: none;
+      }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 14px 20px;
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--line);
+      }
+
+      body.dark .topbar {
+        background: rgba(10, 16, 30, 0.8);
+      }
+
+      .brand-wrap {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .brand-text {
+        font-size: 2rem;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        background: var(--gradient);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .nav-buttons {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .btn-primary, .btn-secondary {
+        border: none;
+        outline: none;
+        border-radius: 999px;
+        font-weight: 600;
+        padding: 0.78rem 1.2rem;
+        color: white;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .btn-primary {
+        background: var(--gradient);
+        box-shadow: 0 10px 30px rgba(124, 58, 237, 0.28);
+      }
+
+      .btn-secondary {
+        background: linear-gradient(135deg, #ffd700, #0066ff);
+        box-shadow: 0 15px 35px rgba(0, 102, 255, 0.35);
+      }
+
+      .icon-btn {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.15);
+        color: var(--text);
+        font-size: 1.2rem;
+      }
+
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 40px 20px;
+      }
+
+      .hero {
+        text-align: center;
+        padding: 40px 20px;
+      }
+
+      .hero h1 {
+        font-size: clamp(2.2rem, 5vw, 4rem);
+        line-height: 1.1;
+        margin: 0 0 18px;
+      }
+
+      .hero p {
+        max-width: 760px;
+        margin: 0 auto;
+        font-size: 1.02rem;
+        color: var(--muted);
+      }
+
+      .hero-banner {
+        height: 280px;
+        background: linear-gradient(135deg, #7c3aed, #ec4899, #06b6d4, #3b82f6);
+        border-radius: 32px;
+        margin: 26px auto 0;
+        max-width: 900px;
+        background-size: 400% 400%;
+        animation: shimmer 10s ease infinite;
+        box-shadow: var(--shadow);
+      }
+
+      @keyframes shimmer {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+
+      .section-header {
+        margin: 40px 0 20px;
+        font-size: 1.8rem;
+        font-weight: 700;
+      }
+
+      .story-list {
+        display: flex;
+        gap: 16px;
+        overflow-x: auto;
+        padding: 10px 4px 20px;
+        scrollbar-width: none;
+      }
+
+      .story-list::-webkit-scrollbar {
+        display: none;
+      }
+
+      .story-pill {
+        flex-shrink: 0;
+        width: 88px;
+        height: 88px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #f9ce34, #ee2a7b, #6228d7);
+        color: white;
+        font-weight: 700;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 12px 25px rgba(124, 58, 237, 0.28);
+        transition: transform 0.2s ease;
+      }
+
+      .story-pill:hover {
+        transform: scale(1.05);
+      }
+
+      .feed {
+        display: grid;
+        gap: 20px;
+        max-width: 720px;
+        margin: 0 auto;
+      }
+
+      .post-card {
+        background: var(--surface-strong);
+        border-radius: 26px;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        border: 1px solid var(--line);
+      }
+
+      .post-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 18px;
+      }
+
+      .post-avatar {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: var(--gradient);
+      }
+
+      .post-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+
+      .post-meta strong {
+        font-size: 0.96rem;
+      }
+
+      .post-meta small {
+        color: var(--muted);
+      }
+
+      .post-cover {
+        height: 380px;
+        background: linear-gradient(135deg, #7c3aed, #ec4899, #06b6d4);
+      }
+
+      .post-actions {
+        display: flex;
+        gap: 16px;
+        font-size: 1.7rem;
+        padding: 16px 18px 6px;
+      }
+
+      .post-caption {
+        padding: 0 18px 18px;
+        color: var(--muted);
+      }
+
+      .modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.68);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 100;
+        padding: 20px;
+      }
+
+      .modal.active {
+        display: flex;
+      }
+
+      .modal-content {
+        width: min(430px, 100%);
+        background: var(--surface-strong);
+        border: 1px solid var(--line);
+        border-radius: 26px;
+        box-shadow: var(--shadow);
+        padding: 28px;
+      }
+
+      .modal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 18px;
+      }
+
+      .modal-header h3 {
+        margin: 0;
+        font-size: 1.5rem;
+      }
+
+      .close-btn {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        border: none;
+        background: rgba(124, 58, 237, 0.1);
+        color: var(--text);
+        font-size: 1rem;
+        cursor: pointer;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .form-group input {
+        padding: 12px 14px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: var(--surface);
+        color: var(--text);
+      }
+
+      .bottom-nav {
+        position: fixed;
+        left: 50%;
+        bottom: 16px;
+        transform: translateX(-50%);
+        width: min(700px, calc(100% - 30px));
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        padding: 14px 18px;
+        border-radius: 32px;
+        background: var(--surface);
+        backdrop-filter: blur(14px);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow);
+        z-index: 25;
+      }
+
+      .nav-btn {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        border: none;
+        background: transparent;
+        color: var(--text);
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
+
+      .nav-btn.active {
+        background: rgba(124, 58, 237, 0.12);
+      }
+
+      .primary-nav {
+        width: 54px;
+        height: 54px;
+        background: linear-gradient(135deg, #ffd700, #0066ff);
+        color: white;
+        font-size: 2rem;
+        box-shadow: 0 12px 28px rgba(0, 102, 255, 0.26);
+      }
+
+      .ai-fab {
+        position: fixed;
+        right: 20px;
+        bottom: 92px;
+        width: 66px;
+        height: 66px;
+        border-radius: 50%;
+        border: none;
+        font-size: 1.8rem;
+        color: white;
+        background: linear-gradient(135deg, #ffd700, #0066ff);
+        box-shadow: 0 0 30px rgba(255, 215, 0, 0.45);
+        cursor: pointer;
+        animation: pulse 2s infinite;
+        z-index: 30;
+      }
+
+      @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.06); }
+        100% { transform: scale(1); }
+      }
+
+      .page {
+        display: none;
+        animation: fadeIn 0.25s ease;
+      }
+
+      .page.active {
+        display: block;
+        padding-bottom: 120px;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 640px) {
+        .hero-banner {
+          height: 180px;
+        }
+        .post-cover {
+          height: 270px;
+        }
+      }
+    </style>
   </head>
   <body>
     <header class="topbar">
       <div class="brand-wrap">
-        <div class="brand-mark" aria-label="Knot logo">
-          <svg viewBox="0 0 120 120" aria-hidden="true">
-            <defs>
-              <linearGradient id="knotGradient" x1="0%" x2="100%" y1="0%" y2="100%">
-                <stop offset="0%" stop-color="#7c3aed" />
-                <stop offset="45%" stop-color="#ec4899" />
-                <stop offset="100%" stop-color="#06b6d4" />
-              </linearGradient>
-            </defs>
-            <circle cx="60" cy="60" r="52" fill="url(#knotGradient)" />
-            <path
-              d="M38 40 C56 18, 84 20, 82 52"
-              stroke="white"
-              stroke-width="8"
-              fill="none"
-              stroke-linecap="round"
-            />
-            <path
-              d="M82 82 C62 102, 34 100, 38 70"
-              stroke="white"
-              stroke-width="8"
-              fill="none"
-              stroke-linecap="round"
-            />
-          </svg>
-        </div>
         <div class="brand-text">KNOT</div>
       </div>
-
-      <div class="top-actions">
-        <button class="secondary-button" data-open-modal="signupModal">Sign Up</button>
-        <button class="secondary-button" data-open-modal="loginModal">Login</button>
-        <button class="icon-button" id="themeToggle" aria-label="Toggle theme">🌙</button>
+      <div class="nav-buttons">
+        <button class="btn-primary">Sign Up</button>
+        <button class="btn-primary">Login</button>
+        <button class="icon-btn" id="themeToggle">🌙</button>
       </div>
     </header>
 
-    <main class="app-shell">
+    <main id="mainContent">
       <section class="page active" id="homePage">
-        <div class="hero">
-          <h1>Connect • Share • Chat</h1>
-          <p>
-            The next-generation social platform combining stories, posts, messaging,
-            calls and AI in one elegant experience.
-          </p>
-        </div>
-
-        <div class="hero-banner" aria-label="Featured social graphic"></div>
-
-        <div class="section-header">
-          <h2>Stories</h2>
-        </div>
-
-        <div class="story-list" aria-label="Stories list">
-          <button class="story-pill story-you">You</button>
-          <button class="story-pill">Alex</button>
-          <button class="story-pill">Sarah</button>
-          <button class="story-pill">Emma</button>
-          <button class="story-pill">John</button>
-          <button class="story-pill">Mike</button>
-          <button class="story-pill">Ava</button>
-        </div>
-
-        <div class="feed" id="feedList" aria-live="polite"></div>
-      </section>
-
-      <section class="page" id="messagesPage">
-        <div class="section-header">
-          <h2>Messages</h2>
-        </div>
-
-        <div class="chat-card">
-          <div class="chat-window" id="chatLog">
-            <div class="message-row incoming"><span class="name">Alex:</span> Hey, are you joining the call tonight?</div>
-            <div class="message-row outgoing"><span class="name">You:</span> Yep, absolutely 🔥</div>
+        <div class="container">
+          <div class="hero">
+            <h1>Connect • Share • Chat</h1>
+            <p>The next-generation social platform combining stories, posts, messaging, calls and AI in one elegant experience.</p>
           </div>
 
-          <div class="chat-composer">
-            <input id="messageInput" type="text" placeholder="Type a message..." />
-            <button class="primary-button" id="sendMessageBtn">Send</button>
+          <div class="hero-banner"></div>
+
+          <div class="section-header">Stories</div>
+          <div class="story-list">
+            <button class="story-pill">You</button>
+            <button class="story-pill">Alex</button>
+            <button class="story-pill">Sarah</button>
+            <button class="story-pill">Emma</button>
+            <button class="story-pill">John</button>
+            <button class="story-pill">Mike</button>
+            <button class="story-pill">Ava</button>
           </div>
-        </div>
 
-        <div class="section-header">
-          <h2>Calls</h2>
-        </div>
+          <div class="section-header">Feed</div>
+          <div class="feed" id="feedList">
+            <article class="post-card">
+              <div class="post-header">
+                <div class="post-avatar"></div>
+                <div class="post-meta">
+                  <strong>@knot_user ✔️</strong>
+                  <small>2 mins ago</small>
+                </div>
+              </div>
+              <div class="post-cover"></div>
+              <div class="post-actions">❤️ 💬 ↗️ 🔖</div>
+              <div class="post-caption">Amazing moments with friends. #Knot</div>
+            </article>
 
-        <div class="call-card">
-          <div class="call-actions">
-            <button class="primary-button" id="audioCallBtn">📞 Audio Call</button>
-            <button class="primary-button" id="videoCallBtn">🎥 Video Call</button>
+            <article class="post-card">
+              <div class="post-header">
+                <div class="post-avatar"></div>
+                <div class="post-meta">
+                  <strong>@sarah</strong>
+                  <small>18 mins ago</small>
+                </div>
+              </div>
+              <div class="post-cover" style="background: linear-gradient(135deg, #2563eb, #06b6d4, #22c55e);"></div>
+              <div class="post-actions">❤️ 💬 ↗️ 🔖</div>
+              <div class="post-caption">Designing the future and making memories. ✨</div>
+            </article>
+
+            <article class="post-card">
+              <div class="post-header">
+                <div class="post-avatar"></div>
+                <div class="post-meta">
+                  <strong>@alex</strong>
+                  <small>1 hour ago</small>
+                </div>
+              </div>
+              <div class="post-cover" style="background: linear-gradient(135deg, #f59e0b, #ef4444, #ec4899);"></div>
+              <div class="post-actions">❤️ 💬 ↗️ 🔖</div>
+              <div class="post-caption">Coffee, code, and a little creativity. ☕</div>
+            </article>
           </div>
-          <video id="localVideo" autoplay muted playsinline></video>
-        </div>
-      </section>
-
-      <section class="page" id="reelsPage">
-        <div class="section-header">
-          <h2>🎬 Knot Reels</h2>
-        </div>
-
-        <div class="reel-grid">
-          <article class="reel-card">
-            <div class="reel-video">📹 Reel Video Preview</div>
-            <div class="reel-meta">
-              <strong>@creator</strong>
-              <p>Living my best life ✨</p>
-            </div>
-          </article>
-
-          <article class="reel-card alt">
-            <div class="reel-video">💡 Workshop Moment</div>
-            <div class="reel-meta">
-              <strong>@designlab</strong>
-              <p>Small ideas, big breakthroughs.</p>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <section class="page" id="searchPage">
-        <div class="section-header">
-          <h2>🔍 Search</h2>
-        </div>
-
-        <div class="search-card">
-          <input id="searchUsersInput" type="text" placeholder="Search users..." />
-          <div class="search-results" id="searchResults">
-            <div class="search-item">👤 @alex</div>
-            <div class="search-item">👤 @emma</div>
-            <div class="search-item">👤 @john</div>
-            <div class="search-item">👤 @sarah</div>
-          </div>
-        </div>
-      </section>
-
-      <section class="page" id="notificationsPage">
-        <div class="section-header">
-          <h2>🔔 Notifications</h2>
-        </div>
-
-        <div class="notification-list">
-          <div class="notification-item">❤️ Alex liked your photo</div>
-          <div class="notification-item">💬 Sarah commented on your post</div>
-          <div class="notification-item">👤 Emma followed you</div>
-          <div class="notification-item">🎉 Your post reached 500 views</div>
-        </div>
-      </section>
-
-      <section class="page" id="profilePage">
-        <div class="profile-card">
-          <div class="profile-avatar"></div>
-          <h2>@knot_user</h2>
-          <p>Building the future of social media.</p>
-
-          <div class="profile-stats">
-            <div><strong>25</strong><span>Posts</span></div>
-            <div><strong>1.4K</strong><span>Followers</span></div>
-            <div><strong>420</strong><span>Following</span></div>
-          </div>
-        </div>
-
-        <div class="profile-grid">
-          <div class="grid-post"></div>
-          <div class="grid-post"></div>
-          <div class="grid-post"></div>
-          <div class="grid-post"></div>
-          <div class="grid-post"></div>
-          <div class="grid-post"></div>
-          <div class="grid-post"></div>
-          <div class="grid-post"></div>
-          <div class="grid-post"></div>
         </div>
       </section>
     </main>
 
-    <button class="ai-fab" id="openAI" aria-label="Open Knot AI">🤖</button>
+    <button class="ai-fab" id="openAI">🤖</button>
 
-    <nav class="bottom-nav" aria-label="Main navigation">
-      <button class="nav-button active" data-page="homePage" aria-label="Home">🏠</button>
-      <button class="nav-button" data-page="searchPage" aria-label="Search">🔍</button>
-      <button class="nav-button primary-nav" id="openCreateModal" aria-label="Create post">＋</button>
-      <button class="nav-button" data-page="reelsPage" aria-label="Reels">🎬</button>
-      <button class="nav-button" data-page="profilePage" aria-label="Profile">👤</button>
+    <nav class="bottom-nav">
+      <button class="nav-btn active" data-page="homePage">🏠</button>
+      <button class="nav-btn" data-page="searchPage">🔍</button>
+      <button class="nav-btn primary-nav">➕</button>
+      <button class="nav-btn" data-page="reelsPage">🎬</button>
+      <button class="nav-btn" data-page="profilePage">👤</button>
     </nav>
 
-    <div class="modal" id="aiModal" aria-hidden="true">
-      <div class="modal-card ai-card">
-        <div class="modal-header">
-          <h3>🤖 Knot AI</h3>
-          <button class="close-button" data-close-modal="aiModal">✕</button>
-        </div>
-
-        <div class="ai-messages" id="aiMessages">
-          <div class="message-row incoming"><span class="name">Knot AI:</span> Hello! How can I help today?</div>
-        </div>
-
-        <div class="ai-composer">
-          <input id="aiInput" type="text" placeholder="Ask Knot AI..." />
-          <button class="primary-button" id="sendAIButton">Send</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="modal" id="signupModal" aria-hidden="true">
-      <div class="modal-card">
-        <div class="modal-header">
-          <h3>Create Account</h3>
-          <button class="close-button" data-close-modal="signupModal">✕</button>
-        </div>
-
-        <div class="modal-form">
-          <input id="signupName" type="text" placeholder="Full Name" />
-          <input id="signupUsername" type="text" placeholder="Username" />
-          <input id="signupEmail" type="email" placeholder="Email" />
-          <input id="signupPassword" type="password" placeholder="Password" />
-          <button class="primary-button full-width" id="registerBtn">Create Account</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="modal" id="loginModal" aria-hidden="true">
-      <div class="modal-card">
+    <div class="modal" id="loginModal">
+      <div class="modal-content">
         <div class="modal-header">
           <h3>Login</h3>
-          <button class="close-button" data-close-modal="loginModal">✕</button>
+          <button class="close-btn">✕</button>
         </div>
-
-        <div class="modal-form">
-          <input id="loginEmail" type="email" placeholder="Email" />
-          <input id="loginPassword" type="password" placeholder="Password" />
-          <button class="primary-button full-width" id="loginBtn">Login</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="modal" id="createPostModal" aria-hidden="true">
-      <div class="modal-card">
-        <div class="modal-header">
-          <h3>Create Post</h3>
-          <button class="close-button" data-close-modal="createPostModal">✕</button>
-        </div>
-
-        <div class="modal-form">
-          <input id="postCaption" type="text" placeholder="Write a caption" />
-          <button class="primary-button full-width" id="publishPostBtn">Publish</button>
+        <div class="form-group">
+          <input type="email" placeholder="Email" />
+          <input type="password" placeholder="Password" />
+          <button class="btn-primary">Login</button>
         </div>
       </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+      document.getElementById('themeToggle').addEventListener('click', () => {
+        document.body.classList.toggle('dark');
+      });
+
+      document.querySelectorAll('[data-page]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          alert('Page: ' + btn.dataset.page);
+        });
+      });
+
+      document.getElementById('openAI').addEventListener('click', () => {
+        alert('🤖 Knot AI Assistant');
+      });
+    </script>
   </body>
 </html>
